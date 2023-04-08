@@ -1,9 +1,19 @@
 import { type NextPage } from "next";
 import Head from "next/head";
 import { signIn, signOut, useSession } from "next-auth/react";
+import { api } from "~/utils/api";
+import { Recipes } from "~/components/Recipes";
 
 const Home: NextPage = () => {
   const { data: sessionData } = useSession();
+  const {
+    data: recipes,
+    isLoading,
+    isError,
+  } = api.recipe.all.useQuery(undefined, { enabled: !!sessionData });
+
+  if (sessionData && isLoading) return <div>Loading recipes</div>;
+  if (sessionData && isError) return <div>Error fetching recipes</div>;
 
   return (
     <>
@@ -15,6 +25,16 @@ const Home: NextPage = () => {
 
       <main className="flex min-h-screen flex-col items-center bg-slate-900">
         <div className="mt-12 flex flex-col items-center gap-2">
+          {recipes && (
+            <>
+              <div className="gird grid-cols-1 gap-4 md:gap-8">
+                <div className="flex flex-col gap-4 rounded-xl bg-white/10 p-4 text-white">
+                  <h3 className="text-xl font-bold">Recipes</h3>
+                  <Recipes recipes={recipes} />
+                </div>
+              </div>
+            </>
+          )}
           <div className="flex flex-col items-center justify-center gap-4">
             <p className="text-center text-sm text-white">
               {sessionData && (
