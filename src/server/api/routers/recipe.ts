@@ -1,5 +1,6 @@
 import { createRecipeInput } from "~/types";
 import { createTRPCRouter, protectedProcedure } from "../trpc";
+import { z } from "zod";
 
 export const recipeRouter = createTRPCRouter({
     all: protectedProcedure.query( async ({ ctx }) => {
@@ -33,6 +34,13 @@ export const recipeRouter = createTRPCRouter({
                         id: ctx.session.user.id
                     }
                 }
+            }
+        })
+    }),
+    delete: protectedProcedure.input(z.string()).mutation(async ( { ctx, input } ) => {
+        return ctx.prisma.recipe.delete({
+            where: {
+                id: input
             }
         })
     })

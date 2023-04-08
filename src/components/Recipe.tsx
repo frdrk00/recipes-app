@@ -1,7 +1,7 @@
-/* import toast from "react-hot-toast"; */
-/* import { CiSquareRemove } from "react-icons/ci"; */
+import toast from "react-hot-toast";
+import { CiSquareRemove } from "react-icons/ci";
 import { type Recipe } from "~/types";
-/* import { api } from "~/utils/api"; */
+import { api } from "~/utils/api";
 
 type RecipeProps = {
   recipe: Recipe;
@@ -9,7 +9,7 @@ type RecipeProps = {
 
 export function Recipe({ recipe }: RecipeProps) {
   const { id, title, ingredients } = recipe;
-  /* 
+  
   const trpc = api.useContext();
 
   const { mutate: deleteMutation } = api.recipe.delete.useMutation({
@@ -42,7 +42,7 @@ export function Recipe({ recipe }: RecipeProps) {
       await trpc.recipe.all.invalidate();
     },
   }); 
-  */
+ 
 
   return (
     <div className="flex flex-1 flex-col gap-2">
@@ -54,12 +54,12 @@ export function Recipe({ recipe }: RecipeProps) {
           </div>
         );
       })}
-{/*       <div className="mt-4 flex flex-1 items-end gap-2 self-end">
+      <div className="mt-4 flex flex-1 items-end gap-2 self-end">
         <CiSquareRemove
           className="cursor-pointer text-2xl text-red-500"
           onClick={() => deleteMutation(id)}
         />
-      </div> */}
+      </div>
     </div>
   );
 }
